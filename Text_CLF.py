@@ -151,6 +151,12 @@ def evaluate(model, texts, labels):
     return accuracy
 
 
+  # This may take a while to run!
+n_iters = 5
+for i in range(n_iters):
+    losses = train(nlp, train_data, optimizer)
+    accuracy = evaluate(nlp, val_texts, val_labels)
+    print(f"Loss: {losses['textcat']:.3f} \t Accuracy: {accuracy:.3f}")
 
 
 
