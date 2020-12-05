@@ -137,7 +137,7 @@ def evaluate(model, texts, labels):
     
     """
     # Get predictions from textcat model (using your predict method)
-    predicted_class = predict(nlp, texts)
+    predicted_class = predict(model, texts)
     
     # From labels, get the true class as a list of integers (POSITIVE -> 1, NEGATIVE -> 0)
     true_class = [int(each['cats']['POSITIVE']) for each in labels]
