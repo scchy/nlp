@@ -2,8 +2,7 @@
 # Create date : 2020-01-14
 # Author: Scc_hy
 # Func: NLP Learning
-# Refrence: https://www.bilibili.com/video/BV1s4411N7fC
-
+# Reference: https://www.bilibili.com/video/BV1s4411N7fC
 
 import numpy as np
 import matplotlib.pyplot as plt
