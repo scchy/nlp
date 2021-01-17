@@ -68,3 +68,79 @@ def display_pca_scatterplot(word_model, words=None, sample=0):
 
 
 display_pca_scatterplot(model, sample=30)
+
+# Simple SVD word vectors in python
+# 2000年左右喜欢用的方式
+# --------------------------------------------------------------
+la = np.linalg
+words = ['I', 'like', 'enjoy', 'deep',
+         'learning', 'NLP', 'flying', '.']
+# 共现矩阵
+X = np.array([
+    [0, 2, 1, 0, 0, 0, 0, 0],
+    [2, 0, 0, 1, 0, 1, 0, 0],
+    [1, 0, 0, 0, 0, 0, 1, 0],
+    [0, 1, 0, 0, 1, 0, 0, 0],
+    [0, 0, 0, 1, 0, 0, 0, 1],
+    [0, 1, 0, 0, 0, 0, 0, 1],
+    [0, 0, 1, 0, 0, 0, 0, 1],
+    [0, 0, 0, 0, 1, 1, 1, 0]
+])
+
+U, S, V = la.svd(X, full_matrices=False)
+plt.style.use('ggplot')
+plt.figure(figsize=(10, 6))
+plt.scatter(U[:, 0], U[:, 1])
+for i in range(len(words)):
+    # 前两个特征值
+    plt.text(U[i, 0], U[i, 1], words[i])
+
+plt.ylim(np.min(U), np.max(U))
+plt.show()
+
+# Doug Rohde 2005
+# 发明了矢量空间（但并不精准）
+# --------------------------------------------------------------
+old_new_method = """
+- Old
+  - LSA HAL(Lund & Burgess)
+  - COALS, Hellinger-PCA(Rohde & Collobert)
+  - characters:
+    -- Fast training
+    -- Efficient usage of statistics
+    
+    -- Primarily used to capture word similarity
+    -- Disproportionate importance given to large counts
+
+- New
+ - Skip-gram/CBOW(Mikolov et al)
+ - NNLM HLBL RNN
+ - caracter:
+    -- Scales with corpus size
+    -- Inefficient usage of statistics
+    -- Generate improved performances on other tasks
+    -- Can capture complex patterns beyond word similarity
+    
+- Recently:
+ - 2012 Improving Word Representations Via Global Context And Multiple Word Prototypes
+ - EMNLP 2014 (Encoding meaning in vector differences)
+ - 2018 On the Dimensionality of Word Embedding
+ - 2018 Linear Algebraic Structure of Word Sense, with Applications to Polysemy
+"""
+
+# How to evaluate word vectors？
+# --------------------------------------------------------------
+evaluate_word_vectors = """
+- Intrinsic:
+  - Evaluation on a specific/intermediate subtask
+  - Fast to compute
+  - Helps to understand that system
+  - Not clear if really helpful unless correlation to real task is established
+- Extrinsic:
+  - Evaluation on a real task
+  - Can take a long time to compute accuracy
+  - Unclear if the subsystem is the problem or its interaction or other subsystems
+  - If replacing exactly one subsystem with another improves accuracy -> Winning!
+
+"""
+
